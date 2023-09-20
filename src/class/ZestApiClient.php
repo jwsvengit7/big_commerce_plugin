@@ -15,7 +15,7 @@ class ZestApiClient {
         $this->zestApiKey = $zestApiKey;
     }
 
-    public function createPaymentToken($orderId, $amount, $customer_name) {
+    public function processPayment($customer_name,$amount) {
         $url = "https://api.dev.gateway.zestpayment.com/payment-engine/api/v1/web-engine/process/transaction-initialization";
 
         $data = [
@@ -52,10 +52,39 @@ class ZestApiClient {
         }
     }
 
-    public function initializePayment($url) {
-        
+    public function init($reference){
+       
+        $endpoint = 'https://api.dev.gateway.zestpayment.com/payment-engine/transaction-verification?ref=' . $reference;
 
+$headers = [
+    'Content-Type: application/json',
+    'Api-Public-Key: ' . $this->zestApiKey,
+];
+
+$curl = curl_init();
+
+curl_setopt_array($curl, [
+    CURLOPT_URL => $endpoint,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_HTTPHEADER => $headers,
+    CURLOPT_SSL_VERIFYHOST => false, 
+    CURLOPT_SSL_VERIFYPEER => false, 
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+    echo "cURL Error: " . $err;
+} else {
+   
+    echo $response;
+}
     }
+
+  
 
 }
 ?>

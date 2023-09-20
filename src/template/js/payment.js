@@ -13,9 +13,9 @@
 
     function payWithZest(email, amount) {
         var handler = ZestPayPop.setup({
-            key: "PK_G7zj4XkFMMW2FthaNim1SA447gBSrSvE", // Replace with your public key
+            key: "PK_G7zj4XkFMMW2FthaNim1SA447gBSrSvE",
             email: email,
-            amount: amount * 100, // Convert amount to cents
+            amount: amount * 100,
             onClose: function () {
                 console.log("Window closed.");
             },
